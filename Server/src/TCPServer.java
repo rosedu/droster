@@ -13,10 +13,10 @@ public class TCPServer extends Thread {
     private boolean running = false;
    // private PrintWriter mOut;
     private OnMessageReceived messageListener;
-    private Map<Socket, PrintWriter> outStream;
+   // private Map<Socket, PrintWriter> outStream;
  
     public static void main(String[] args) {
- 
+    	
         //opens the window where the messages will be received and sent
         ServerBoard frame = new ServerBoard();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,7 +31,7 @@ public class TCPServer extends Thread {
      */
     public TCPServer(OnMessageReceived messageListener) {
         this.messageListener = messageListener;
-        outStream = new HashMap<Socket, PrintWriter>();
+        //outStream = new HashMap<Socket, PrintWriter>();
     }
  
  

@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.*;
  
 /**
  * The class extends the Thread class so we can receive and send messages at the same time
@@ -10,8 +11,9 @@ public class TCPServer extends Thread {
  
     public static final int SERVERPORT = 7121;
     private boolean running = false;
-    private PrintWriter mOut;
+   // private PrintWriter mOut;
     private OnMessageReceived messageListener;
+    private Map<Socket, PrintWriter> outStream;
  
     public static void main(String[] args) {
  
@@ -29,6 +31,7 @@ public class TCPServer extends Thread {
      */
     public TCPServer(OnMessageReceived messageListener) {
         this.messageListener = messageListener;
+        outStream = new HashMap<Socket, PrintWriter>();
     }
  
  
@@ -36,10 +39,16 @@ public class TCPServer extends Thread {
      * Method to send the messages from server to client
      * @param message the message sent by the server
      */
-    public void sendMessage(String message){
-        if (mOut != null && !mOut.checkError()) {
-            mOut.println(message);
-            mOut.flush();
+    public void sendMessage(String message, Socket client){
+    	PrintWriter out = null;
+		try {
+			out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(client.getOutputStream())), true);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        if (out != null && !out.checkError()) {
+            out.println(message);
+            out.flush();
         }
     }
  
@@ -78,7 +87,7 @@ public class TCPServer extends Thread {
     //Declare the interface. The method messageReceived(String message) will must be implemented in the ServerBoard
     //class at on startServer button click
     public interface OnMessageReceived {
-        public void messageReceived(String message);
+        public void messageReceived(String message, Socket client);
     }
     
     class ClientThread implements Runnable
@@ -97,8 +106,11 @@ public class TCPServer extends Thread {
         	try {
         		 
                 //sends the message to the client
-                mOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(client.getOutputStream())), true);
- 
+                //mOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(client.getOutputStream())), true);
+                
+                //add client in hashmap
+                //outStream.put(client, arg1)
+                
                 //read the message received from client
                 BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
  
@@ -109,7 +121,7 @@ public class TCPServer extends Thread {
  
                     if (message != null && messageListener != null) {
                         //call the method messageReceived from ServerBoard class
-                        messageListener.messageReceived(message);
+                        messageListener.messageReceived(message, client);
                     }
                 }
  

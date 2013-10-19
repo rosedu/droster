@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.ServerSocket;
+import java.net.Socket;
  
  
 public class ServerBoard extends JFrame {
@@ -10,10 +12,13 @@ public class ServerBoard extends JFrame {
     private JTextField message;
     private JButton startServer;
     private TCPServer mServer;
+    private Parser parser;
  
     public ServerBoard() {
  
         super("ServerBoard");
+        
+        parser = new Parser();
  
         JPanel panelFields = new JPanel();
         panelFields.setLayout(new BoxLayout(panelFields,BoxLayout.X_AXIS));
@@ -27,7 +32,7 @@ public class ServerBoard extends JFrame {
         messagesArea.setRows(10);
         messagesArea.setEditable(false);
  
-        sendButton = new JButton("Send");
+        /*sendButton = new JButton("Send");
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -41,7 +46,7 @@ public class ServerBoard extends JFrame {
                 message.setText("");
             }
         });
- 
+ */
         startServer = new JButton("Start");
         startServer.addActionListener(new ActionListener() {
             @Override
@@ -55,12 +60,13 @@ public class ServerBoard extends JFrame {
                     //this method declared in the interface from TCPServer class is implemented here
                     //this method is actually a callback method, because it will run every time when it will be called from
                     //TCPServer class (at while)
-                    public void messageReceived(String message) {
+                    public void messageReceived(String message, Socket client) {
                         messagesArea.append("\n "+message);
+                        String response = parser.processMessage(message, client);
+                        mServer.sendMessage(message, client);
                     }
                 });
-                mServer.start();
- 
+                mServer.start(); 
             }
         });
  
@@ -73,7 +79,7 @@ public class ServerBoard extends JFrame {
         panelFields.add(startServer);
  
         panelFields2.add(message);
-        panelFields2.add(sendButton);
+        //panelFields2.add(sendButton);
  
         getContentPane().add(panelFields);
         getContentPane().add(panelFields2);

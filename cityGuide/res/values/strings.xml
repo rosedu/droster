@@ -8,5 +8,13 @@
     <string name="title_activity_login">Login</string>
     <string name="title_activity_home">Home</string>
     <string name="title_activity_signup">Signup</string>
+    <string name="title_activity_search">Search</string>
+    <string name="title_activity_my_adapter">MyAdapter</string>
+    <string name="title_activity_create_event">CreateEvent</string>
+    <string name="title_activity_event">Event</string>
+    <string name="textTab1">All Tours</string>
+    <string name="textTab2">My Tours</string>
+    <string name="textTab3">Tours in my city</string>
+    <color name="bkgrcolor">#bfe2f4</color>
 
 </resources>

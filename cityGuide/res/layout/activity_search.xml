@@ -14,8 +14,8 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" 
-            android:background="#BBBBBB">
+            android:layout_height="wrap_content"
+            android:background="#BBBBBB" >
 
             <ImageView
                 android:id="@+id/barLogo"
@@ -23,29 +23,29 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="0.2"
-                android:layout_alignParentLeft="true"
                 android:src="@drawable/mini_logo" />
 
-            <TextView
-                android:id="@+id/logotext"
+            <EditText
+                android:id="@+id/editText1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="CityGuide"
                 android:layout_weight="0.6"
-                android:textSize="25dp" />
-            
+                android:ems="10"
+                android:hint="Enter a city" >
+
+                <requestFocus />
+            </EditText>
+
             <ImageButton
-		        android:id="@+id/barSearch"
-		        android:layout_height="50dp"
-		        android:layout_width="50dp"
-		        android:layout_alignParentRight="true"
-		        android:layout_alignParentTop="true"
-		        android:layout_weight="0.2"		
-		        android:src="@drawable/ic_search" />
-            
+                android:id="@+id/barSearch"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_weight="0.2"
+                android:src="@drawable/ic_search" />
         </LinearLayout>
-        
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="40dp" 
@@ -140,18 +140,19 @@
         </LinearLayout>
 
         <ListView
-	        android:id="@+id/listView1"
-	        android:layout_width="match_parent"
-	        android:layout_height="360dp"
-	        android:layout_alignParentBottom="true"
-	        android:layout_centerHorizontal="true"
-	        android:layout_marginBottom="15dp"
-	        android:listSelector="@drawable/list_selector_flatcolor" 
-	        android:dividerHeight="1dp">
-    	</ListView>
+            android:id="@+id/listView1"
+            android:layout_width="match_parent"
+            android:layout_height="316dp"
+            android:layout_weight="0.8"
+            android:padding="10dp" >
+        </ListView>
 
+        <Button
+            android:id="@+id/bCreateEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="Create a new tour" />
     </LinearLayout>
-
-    
 
 </RelativeLayout>

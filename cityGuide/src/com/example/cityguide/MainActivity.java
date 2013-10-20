@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Menu;
 
 public class MainActivity extends Activity {
 	public static TCPClient mTcpClient = null;
@@ -14,10 +15,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
-        Intent serviceIntent = new Intent(MainActivity.this, MyService.class);
-        startService(serviceIntent);
-        
         
         new connectTask().execute("");
         

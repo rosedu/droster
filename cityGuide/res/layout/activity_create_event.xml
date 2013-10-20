@@ -139,16 +139,32 @@
             
         </LinearLayout>
 
-        <ListView
-	        android:id="@+id/listView1"
-	        android:layout_width="match_parent"
-	        android:layout_height="360dp"
-	        android:layout_alignParentBottom="true"
-	        android:layout_centerHorizontal="true"
-	        android:layout_marginBottom="15dp"
-	        android:listSelector="@drawable/list_selector_flatcolor" 
-	        android:dividerHeight="1dp">
-    	</ListView>
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:ems="10"
+            android:inputType="date" />
+
+        <Button
+            android:id="@+id/bCreate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:text="Create" />
 
     </LinearLayout>
 

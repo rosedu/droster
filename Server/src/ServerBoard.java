@@ -63,7 +63,7 @@ public class ServerBoard extends JFrame {
                     public void messageReceived(String message, Socket client) {
                         messagesArea.append("\n "+message);
                         String response = parser.processMessage(message, client);
-                        mServer.sendMessage(message, client);
+                        mServer.sendMessage(response, client);
                     }
                 });
                 mServer.start(); 

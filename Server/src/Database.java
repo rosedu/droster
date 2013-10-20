@@ -12,6 +12,8 @@ public class Database {
    
    Connection conn = null;
    Statement stmt = null;
+   String query = null;
+   ResultSet rs = null;
    
    public Database() {
 	   try{
@@ -24,7 +26,10 @@ public class Database {
 
 	      stmt = conn.createStatement();
 	      
-	      System.out.println("Database created successfully...");
+	      query = "use app";
+	      stmt.executeUpdate(query);
+	      
+	      System.out.println("Database connection successfully...");
 	   }catch(SQLException se){
 	      //Handle errors for JDBC
 	      se.printStackTrace();
@@ -32,10 +37,9 @@ public class Database {
 	      //Handle errors for Class.forName
 	      e.printStackTrace();
 	   }
-	   System.out.println("Goodbye!");
    }
    
-   public void addClient(String[] strings) {
+   public String addClient(String[] strings) {
 		String user = strings[1];
 		String pass = strings[2];
 		String town = strings[3];
@@ -45,17 +49,75 @@ public class Database {
 		
 		//STEP 4: Execute a query
 	      System.out.println("Use right database...");  
-	      
-	      String sql = "use app";
 	      try {
-		      sql = "use app";
-		      stmt.executeUpdate(sql);
-				
-		      sql = String.format("insert into clients (user, pass, town, mail) values ('%s', '%s', '%s', '%s')", user, pass, town, mail);
-		      stmt.executeUpdate(sql);
+		      query = String.format("insert into clients (user, pass, town, mail) values ('%s', '%s', '%s', '%s')", user, pass, town, mail);
+		      stmt.executeUpdate(query);
 	      } catch (SQLException e) {
 				e.printStackTrace();
 	      }
+	      System.out.println("user autentificat");
+	      return "te-au autentificat";
    }
+
+	public String loginClient(String[] strings) {
+		String user = strings[1];
+		String pass = strings[2];
+		
+		String response = "";
+		boolean logged = false;
+		
+		query = "select * from clients";
+		
+		try {
+			rs = stmt.executeQuery(query);
+			while(rs.next()) {
+				String u = rs.getString("user");
+				String p = rs.getString("pass");
+				
+				if(user.equals(u) && pass.equals(p)) {
+					System.out.println("user logat");
+					response += "yes";
+					logged = true;
+					break;
+				}
+			}
+			
+			if(logged == false) {
+				System.out.println("incercare logare user inexistent");
+				response += "no&";
+			}
+			else {
+				response += getEvents();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return response;
+	}
+	
+	private String getEvents() {
+		String events = "";
+		
+		try {
+			query = "select * from events";
+			rs = stmt.executeQuery(query);
+			while(rs.next()) {
+				String town = rs.getString("town");
+				String data = rs.getString("data");
+				String creator = rs.getString("creator");
+				String description = rs.getString("description");
+				String guide = rs.getString("guide");
+				String participants = rs.getString("participants");
+				
+				events += String.format("&%s:%s:%s:%s:%s:%s", town, data, creator, description, guide, participants);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return events;
+	}
    
 }//end Database class

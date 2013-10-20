@@ -9,11 +9,15 @@ public class Parser {
 	}
 	
 	public String processMessage(String message, Socket client) {
+		String response = "";
 		String[] strings = message.split(":");
 		if(strings[0].equals("SU")) { //login
-			db.addClient(strings);
+			response += db.addClient(strings);
+		}
+		else if(strings[0].equals("L")) {
+			response += db.loginClient(strings);
 		}
 		
-		return message;
+		return response;
 	}
 }

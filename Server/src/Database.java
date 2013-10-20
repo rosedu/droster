@@ -119,5 +119,30 @@ public class Database {
 		
 		return events;
 	}
+
+	public String addEvent(String[] strings) {
+		String response = "";
+		
+		String town = strings[1];
+		String data = strings[2];
+		String creator = strings[3];
+		String description = strings[4];
+		String guide = strings[5];
+		String participants = strings[6];
+		
+		try {
+			query = String.format("insert into events (town, data, creator, description, guide, participants)" +
+					" values ('%s', '%s', '%s', '%s', '%s', '%s')", town, data, creator, description, guide, participants);
+			System.out.println(query);
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		response += "yes";
+		response += getEvents();
+		
+		return response;
+	}
    
 }//end Database class

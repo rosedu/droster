@@ -9,11 +9,11 @@ import java.util.*;
  */
 public class TCPServer extends Thread {
  
-    public static final int SERVERPORT = 7121;
+    public static final int SERVERPORT = 7123;
     private boolean running = false;
    // private PrintWriter mOut;
     private OnMessageReceived messageListener;
-   // private Map<Socket, PrintWriter> outStream;
+    public static List<Socket> loggedUsers; 
  
     public static void main(String[] args) {
     	
@@ -32,6 +32,7 @@ public class TCPServer extends Thread {
     public TCPServer(OnMessageReceived messageListener) {
         this.messageListener = messageListener;
         //outStream = new HashMap<Socket, PrintWriter>();
+        loggedUsers = new ArrayList<Socket>();
     }
  
  
@@ -67,6 +68,7 @@ public class TCPServer extends Thread {
             while(true) {
 	            //create client socket... the method accept() listens for a connection to be made to this socket and accepts it.
 	            Socket client = serverSocket.accept();
+	            loggedUsers.add(client);
 	            System.out.println("S: Receiving...");
 	            
 	          //Create a new custom thread to handle the connection

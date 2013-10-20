@@ -11,11 +11,15 @@ public class Parser {
 	public String processMessage(String message, Socket client) {
 		String response = "";
 		String[] strings = message.split(":");
-		if(strings[0].equals("SU")) { //login
+		if(strings[0].equals("SU")) { //authentification
 			response += db.addClient(strings);
 		}
-		else if(strings[0].equals("L")) {
+		else if(strings[0].equals("L")) { //login
 			response += db.loginClient(strings);
+		}
+		else if(strings[0].equals("ADD")) { //add event
+			System.out.println(message);
+			response += db.addEvent(strings);
 		}
 		
 		return response;
